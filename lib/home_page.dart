@@ -9,11 +9,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String operation = '';
   int total = 0;
-  int currentNumber = 0;
+  List<String> currentNumbers = [];
 
   void clearAll() {
     setState(() {
       total = 0;
+      currentNumbers = [];
       operation = '';
     });
   }
@@ -21,11 +22,22 @@ class _HomePageState extends State<HomePage> {
   void clearEntry() {
     setState(() {
       total = 0;
+      currentNumbers = [];
     });
   }
 
+  void addNumber(String number) {
+    if (currentNumbers.length <= 8) {
+      setState(() {
+        currentNumbers.add(number);
+      });
+    } else {
+      // TODO: Insert logic to alert the user that the number limit was reached at 8.
+    }
+  }
+
   operate(num1, num2, operation) {
-    switch(operation) {
+    switch (operation) {
       case '+':
         return num1 + num2;
       case '-':
@@ -37,14 +49,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  String joinNumbers() {
+    return currentNumbers.isNotEmpty
+        ? currentNumbers.reduce((value, element) => value + element)
+        : '0';
+  }
+
   @override
   Widget build(BuildContext context) {
+    String numbersInt = joinNumbers();
+
     return Scaffold(
       body: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 0),
             height: MediaQuery.of(context).size.height * 0.15,
             width: double.infinity,
             child: Column(
@@ -58,9 +78,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Text(
-                  currentNumber != 0 ? currentNumber.toString() : total.toString(),
+                  currentNumbers.isEmpty ? 0.toString() : numbersInt,
                   style: TextStyle(
-                    fontSize: 75,
+                    fontSize: 70,
                     color: Colors.white,
                   ),
                 ),
@@ -109,15 +129,21 @@ class _HomePageState extends State<HomePage> {
             children: [
               CalcButton(
                 text: '7',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('7');
+                },
               ),
               CalcButton(
                 text: '8',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('8');
+                },
               ),
               CalcButton(
                 text: '9',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('9');
+                },
               ),
               CalcButton(
                 color: Colors.orange,
@@ -135,15 +161,21 @@ class _HomePageState extends State<HomePage> {
             children: [
               CalcButton(
                 text: '4',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('4');
+                },
               ),
               CalcButton(
                 text: '5',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('5');
+                },
               ),
               CalcButton(
                 text: '6',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('6');
+                },
               ),
               CalcButton(
                 color: Colors.orange,
@@ -161,15 +193,21 @@ class _HomePageState extends State<HomePage> {
             children: [
               CalcButton(
                 text: '1',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('1');
+                },
               ),
               CalcButton(
                 text: '2',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('2');
+                },
               ),
               CalcButton(
                 text: '3',
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('3');
+                },
               ),
               CalcButton(
                 color: Colors.orange,
@@ -188,11 +226,21 @@ class _HomePageState extends State<HomePage> {
               CalcButton(
                 text: '0',
                 flex: 2,
-                onPressed: () {},
+                onPressed: () {
+                  addNumber('0');
+                },
               ),
               CalcButton(
                 text: '.',
-                onPressed: () {},
+                onPressed: () {
+                  if (currentNumbers.isEmpty) {
+                    addNumber('0.');
+                  } else {
+                    currentNumbers.toString().contains('.')
+                        ? addNumber('')
+                        : addNumber('.');
+                  }
+                },
               ),
               CalcButton(
                 color: Colors.blue,
