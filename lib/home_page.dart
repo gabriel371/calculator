@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:calculator/calc_button.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,7 @@ class _HomePageState extends State<HomePage> {
   String operation = '';
   int total = 0;
   List<String> currentNumbers = [];
+  Color stringColor = Colors.white;
 
   void clearAll() {
     setState(() {
@@ -32,8 +35,15 @@ class _HomePageState extends State<HomePage> {
         currentNumbers.add(number);
       });
     } else {
-      // TODO: Insert logic to alert the user that the number limit was reached at 8.
+      setState(() {
+        stringColor = Colors.red;
+      });
+      colorTimeout();
     }
+  }
+
+  colorTimeout() {
+    return Timer(Duration(milliseconds: 1000), () => setState(() => stringColor = Colors.white));
   }
 
   operate(num1, num2, operation) {
@@ -81,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                   currentNumbers.isEmpty ? 0.toString() : numbersInt,
                   style: TextStyle(
                     fontSize: 70,
-                    color: Colors.white,
+                    color: stringColor,
                   ),
                 ),
               ],
