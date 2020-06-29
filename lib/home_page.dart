@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:calculator/calc_button.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,29 @@ class _HomePageState extends State<HomePage> {
     return currentNumbers.isNotEmpty
         ? currentNumbers.reduce((value, element) => value + element)
         : '0';
+  }
+
+  equal(String numbers) {
+    if (operation == '÷') {
+      setState(() {
+        currentNumbers = [(int.parse(waitingNumber) / int.parse(numbers)).toString()];
+      });
+    }
+    if (operation == '×') {
+      setState(() {
+        currentNumbers = [(int.parse(waitingNumber) * int.parse(numbers)).toString()];
+      });
+    }
+    if (operation == '-') {
+      setState(() {
+        currentNumbers = [(int.parse(waitingNumber) - int.parse(numbers)).toString()];
+      });
+    }
+    if (operation == '+') {
+      setState(() {
+        currentNumbers = [(int.parse(waitingNumber) + int.parse(numbers)).toString()];
+      });
+    }
   }
 
   @override
@@ -269,7 +293,9 @@ class _HomePageState extends State<HomePage> {
               CalcButton(
                 color: Colors.blue,
                 text: '=',
-                onPressed: () {},
+                onPressed: () {
+                  equal(numbersInt);
+                },
               ),
             ],
           ),
