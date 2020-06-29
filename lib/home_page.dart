@@ -13,9 +13,11 @@ class _HomePageState extends State<HomePage> {
   int total = 0;
   List<String> currentNumbers = [];
   Color stringColor = Colors.white;
+  String waitingNumber = '';
 
   void clearAll() {
     setState(() {
+      waitingNumber = '';
       total = 0;
       currentNumbers = [];
       operation = '';
@@ -43,20 +45,40 @@ class _HomePageState extends State<HomePage> {
   }
 
   colorTimeout() {
-    return Timer(Duration(milliseconds: 1000), () => setState(() => stringColor = Colors.white));
+    return Timer(Duration(milliseconds: 1000),
+        () => setState(() => stringColor = Colors.white));
   }
 
-  operate(num1, num2, operation) {
-    switch (operation) {
-      case '+':
-        return num1 + num2;
-      case '-':
-        return num1 - num2;
-      case '÷':
-        return num1 / num2;
-      case '×':
-        return num1 * num2;
-    }
+  setDivision(String numbers) {
+    setState(() {
+      waitingNumber = numbers;
+      operation = '÷';
+      currentNumbers = [];
+    });
+  }
+
+  setMultiplication(String numbers) {
+    setState(() {
+      waitingNumber = numbers;
+      operation = '×';
+      currentNumbers = [];
+    });
+  }
+
+  setSubtraction(String numbers) {
+    setState(() {
+      waitingNumber = numbers;
+      operation = '-';
+      currentNumbers = [];
+    });
+  }
+
+  setAddition(String numbers) {
+    setState(() {
+      waitingNumber = numbers;
+      operation = '+';
+      currentNumbers = [];
+    });
   }
 
   String joinNumbers() {
@@ -81,7 +103,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  operation,
+                  waitingNumber + ' ' + operation,
                   style: TextStyle(
                     fontSize: 25,
                     color: Colors.grey[600],
@@ -127,9 +149,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.orange,
                 text: '÷',
                 onPressed: () {
-                  setState(() {
-                    operation = '÷';
-                  });
+                  setDivision(numbersInt);
                 },
               ),
             ],
@@ -159,9 +179,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.orange,
                 text: '×',
                 onPressed: () {
-                  setState(() {
-                    operation = '×';
-                  });
+                  setMultiplication(numbersInt);
                 },
               ),
             ],
@@ -191,9 +209,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.orange,
                 text: '-',
                 onPressed: () {
-                  setState(() {
-                    operation = '-';
-                  });
+                  setSubtraction(numbersInt);
                 },
               ),
             ],
@@ -223,9 +239,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.orange,
                 text: '+',
                 onPressed: () {
-                  setState(() {
-                    operation = '+';
-                  });
+                  setAddition(numbersInt);
                 },
               ),
             ],
