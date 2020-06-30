@@ -111,6 +111,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  percentage(String numbers) {
+    setState(() {
+      currentNumbers = [(int.parse(numbers) / 100).toString()];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     String numbersInt = joinNumbers();
@@ -164,9 +170,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.orange,
                 text: '%',
                 onPressed: () {
-                  setState(() {
-                    operation = '%';
-                  });
+                  percentage(numbersInt);
                 },
               ),
               CalcButton(
@@ -275,7 +279,9 @@ class _HomePageState extends State<HomePage> {
                 text: '0',
                 flex: 2,
                 onPressed: () {
-                  addNumber('0');
+                  if (numbersInt != '0') {
+                    addNumber('0');
+                  }
                 },
               ),
               CalcButton(
