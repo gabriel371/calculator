@@ -7,7 +7,7 @@ class CalcButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   CalcButton({
-    this.color = Colors.white,
+    this.color = Colors.black,
     @required this.text,
     this.flex = 1,
     @required this.onPressed,
@@ -15,17 +15,42 @@ class CalcButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return Expanded(
+    //   flex: flex,
+    //   child: MaterialButton(
+    //     color: color,
+    //     padding: EdgeInsets.all(0),
+    //     onPressed: onPressed,
+    //     child: Container(
+    //       child: Center(
+    //         child: Text(
+    //           text,
+    //           style: TextStyle(
+    //             fontSize: 40,
+    //             fontWeight: FontWeight.bold,
+    //           ),
+    //         ),
+    //       ),
+    //       height: MediaQuery.of(context).size.height * 0.15,
+    //       width: double.infinity,
+    //     ),
+    //   ),
+    // );
     return Expanded(
       flex: flex,
-      child: MaterialButton(
-        color: color,
+      child: FlatButton(
+        color: Colors.white,
         padding: EdgeInsets.all(0),
         onPressed: onPressed,
         child: Container(
+          decoration: BoxDecoration(
+            boxShadow: <BoxShadow>[],
+          ),
           child: Center(
             child: Text(
               text,
               style: TextStyle(
+                color: color,
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
